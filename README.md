@@ -36,5 +36,8 @@ This file contains settings for each type of ShapeNet model file present in the 
 ### `ShapeNetMeshes/`
 This folder contains all the model files which are to be processed. They are stored in a format compatible with [ShapeNet](https://www.shapenet.org/)'s format.
 
+**NOTE:** *The models included in this folder are obtained from [ShapeNet](https://www.shapenet.org/). As part of this repository, these models are licensed to be used only for non-commercial and/or educational purposes.*
+
 ### `RenderedImages/`
 This folder will contain the rendered depth map images. The directory-tree structure is be akin to the `ShapeNetMeshes/` structure.
+
