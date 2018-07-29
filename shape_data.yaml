@@ -1,0 +1,3 @@
+shape_data:
+  - {folder_name: 'Airplane'    , num_labels: 4 , orientation: [90  , 0   , 0  ]}
+  - {folder_name: 'Knife'       , num_labels: 2 , orientation: [0   , -90 , 0  ]}
