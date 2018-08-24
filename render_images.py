@@ -127,7 +127,7 @@ def setupCamera():
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
 
-def makeCameraPath(camera,fov_degrees,theta_step_degrees,phi_degrees,dist_factor):
+def makeCameraPath(camera,fov_degrees,theta_step_degrees,phi_degrees):
     """
     Defining the various positions for the camera to be placed, for creating
     rendering from different angles.
@@ -148,11 +148,6 @@ def makeCameraPath(camera,fov_degrees,theta_step_degrees,phi_degrees,dist_factor
 
     phi_degrees: number
      The 'elevation' angle of the camera
-
-    dist_factor: number
-     If tan(fov/2) = 'opp'/'adj', then dist_factor is 'opp'. This number, thus 
-     is used to determine the distance of the camera based on the 'height' of 
-     the object being rendered
 
     Outputs
     ----------
@@ -178,7 +173,7 @@ def makeCameraPath(camera,fov_degrees,theta_step_degrees,phi_degrees,dist_factor
     # Define Camera Properties
     fov = fov_degrees * np.pi / 180
     camera.data.angle = fov
-    distance_camera = dist_factor / np.tan(fov / 2)
+    distance_camera = 1.0 / (2 * np.sin(fov/2.0))
 
     # Define all locations of the camera when doing a sweep
     thetas = np.arange(0, 360, theta_step_degrees) * np.pi / 180.0
@@ -288,7 +283,7 @@ def addTrackingConstraints(camera,lamp_list,origin_obj):
 
 def scaleShape(shape_object):
     """
-    Scale the object so that it fits inside a unit cube
+    Scale the object so that it fits inside a sphere of radius 0.5
     This is done to eliminate certain variables from other distance calculations
 
     Inputs
@@ -301,10 +296,11 @@ def scaleShape(shape_object):
     None
 
     """
-
-    max_dim = max(shape_object.dimensions)
-    scale = 1.0 / max_dim
-    shape_object.scale /= scale
+    farthest_vertex_distance = max([vert.co.magnitude
+                                    for vert in shape_object.data.vertices])
+    
+    scale = 1.0 / (2 * farthest_vertex_distance)
+    shape_object.scale *= scale
 
 
 # ------------------------------------------------------------------------------
@@ -388,7 +384,6 @@ if __name__ == "__main__":
         config_dict['Camera']['cam_fov'] , 
         config_dict['Camera']['cam_theta_step'] , 
         config_dict['Camera']['cam_phi'] ,
-        config_dict['Camera']['cam_dist_factor']
     )
     
     # --- STEP 5 --- Setup the Pipeline nodes for converting a color render to

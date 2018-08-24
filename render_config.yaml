@@ -3,8 +3,8 @@ Data:
   output_root_folder: "RenderedImages/" # Top-Level folder for Output render images
 
 Scene:
-  x_size: 224 # Width of rendered output image in pixels
-  y_size: 224 # Height of rendered output image in pixels
+  x_size: 512 # Width of rendered output image in pixels
+  y_size: 512 # Height of rendered output image in pixels
 
 Lamp:
   lamp_energy:  0.75    # Energy of lamp; 1 = full energy, but can be higher as well
@@ -15,4 +15,3 @@ Camera:
   cam_fov:          10    # Field-of-View (in degrees)
   cam_theta_step:   10    # Angular Difference (in degrees) between two consecutive positions of the camera 
   cam_phi:          70    # "Elevation" angle of the camera
-  cam_dist_factor:  0.52  # See code for details; is proportional to the distance of the camera from the object
